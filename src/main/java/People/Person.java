@@ -1,6 +1,7 @@
 package People;
 
-import Monster.AllMonster;
+import Monster.AllMonsters;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -36,7 +37,7 @@ public class Person {
             g.fillOval(x, y, 10, 10);
         }
     }
-    public void collision(AllMonster p2) {
+    public void collision(AllMonsters p2) {
 
         Rectangle per1 = new Rectangle(p2.getX(),p2.getY(), 20,20);
         Rectangle per2 = new Rectangle(this.x,this.y, 20,20);
