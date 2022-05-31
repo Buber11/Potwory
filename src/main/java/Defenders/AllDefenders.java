@@ -1,48 +1,44 @@
-package Monster;
+package Defenders;
 
 import Buildings.Block;
-import Defenders.AllDefenders;
-import People.Person;
+import Monster.AllMonsters;
 
 import java.awt.*;
 import java.util.Random;
 
-public abstract class AllMonsters  {
-    protected int x, y;
-    protected int  vx, vy;
-
+public abstract class AllDefenders {
+    protected int x,y;
+    protected int vx,vy;
     protected int level;
 
     protected boolean alive = true;
-    public AllMonsters() {
+
+
+    public AllDefenders() {
         Random rand = new Random();
-        x = rand.nextInt(100);
-        y = rand.nextInt(300);
+        x = rand.nextInt(800);
+        y = rand.nextInt(600);
         vx = rand.nextInt(5);
         vy = rand.nextInt(5);
     }
-    public void attack(AllDefenders p2) {
+    public abstract void paint(Graphics g);
+
+    public void attack(AllMonsters p2) {
 
         Rectangle per1 = new Rectangle(p2.getX(),p2.getY(), 20,20);
         Rectangle per2 = new Rectangle(this.x,this.y, 20,20);
 
         //collision check
-        if(per1.intersects(per2) && (p2.getLevel()>this.level)) {
+        if(per1.intersects(per2) && (p2.getLevel()>=this.level)) {
             this.alive = false;
         }
-
-    }
-    public void eatPerson(Person p2){
-        Rectangle per1 = new Rectangle(p2.getX(),p2.getY(), 20,20);
-        Rectangle per2 = new Rectangle(this.x,this.y, 20,20);
-
-        if(per1.intersects(per2)){
+        if(per1.intersects(per2) && (p2.getLevel()<this.level)){
             level +=1;
         }
     }
     public void collison(Block p2){
         Rectangle per1 = new Rectangle(p2.getX(),p2.getY(), 100,100);
-        Rectangle per2 = new Rectangle(this.x,this.y, 20,20);
+        Rectangle per2 = new Rectangle(this.x,this.y, 10,10);
 
         if(per1.intersects(per2)){
             vx *= -1;
@@ -50,9 +46,6 @@ public abstract class AllMonsters  {
 
         }
     }
-
-    public abstract void paint(Graphics g);
-
     public int getX() {
         return x;
     }
