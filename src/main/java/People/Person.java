@@ -55,4 +55,7 @@ public class Person {
     public int getY() {
         return y;
     }
+    public boolean isAlive() {
+        return alive;
+    }
 }

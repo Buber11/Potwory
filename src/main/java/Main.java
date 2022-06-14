@@ -5,5 +5,7 @@ public class Main {
         int number = Integer.parseInt(JOptionPane.showInputDialog("Podaj liczbę ludzi w mieście"));
         Frame frame = new Frame(number);
 
+
+
     }
 }

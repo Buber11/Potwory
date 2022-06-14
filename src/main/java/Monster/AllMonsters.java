@@ -26,7 +26,7 @@ public abstract class AllMonsters  {
         Rectangle per1 = new Rectangle(p2.getX(),p2.getY(), 20,20);
         Rectangle per2 = new Rectangle(this.x,this.y, 20,20);
 
-        //collision check
+
         if(per1.intersects(per2) && (p2.getLevel()>this.level)) {
             this.alive = false;
         }
@@ -63,5 +63,8 @@ public abstract class AllMonsters  {
 
     public int getLevel() {
         return level;
+    }
+    public boolean isAlive() {
+        return alive;
     }
 }

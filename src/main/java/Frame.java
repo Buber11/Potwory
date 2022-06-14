@@ -12,17 +12,14 @@ import People.Person;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
-/*
-	CFrame extends JPanel so that we can override the paint method. The paint method is necessary to use the simple
-	drawing tools of the library!
 
-	CFrame implements an ActionListener which adds the method actionPerformed. This method is invoked by the
-	animation timer every 16ms.
-*/
 public class Frame extends JPanel implements ActionListener{
 
     ArrayList<Person> people = new ArrayList<Person>();
@@ -33,6 +30,8 @@ public class Frame extends JPanel implements ActionListener{
 
     int number;
 
+    int times =0;
+
 
 
 
@@ -42,49 +41,75 @@ public class Frame extends JPanel implements ActionListener{
 
 
     public void paint(Graphics g) {
+        times += 1;
+        if(times <= 1500){
+            super.paint(g);
 
-        super.paintComponent(g);
-        super.paint(g);
+            times += 1;
 
-        for(Person p: people) {
-            p.paint(g);
-        }
-        for(AllMonsters p: allMonsters){
-            p.paint(g);
-        }
-        for(Block p: allBlocks){
-            p.paint(g);
-        }
+            for(Person p: people) {
+                p.paint(g);
+            }
+            for(AllMonsters p: allMonsters){
+                p.paint(g);
+            }
+            for(Block p: allBlocks){
+                p.paint(g);
+            }
 
-        for(AllDefenders p: allDeffenders){
-            p.paint(g);
-        }
-        Block block = new Block(600,300);
-        block.paint(g);
+            for(AllDefenders p: allDeffenders){
+                p.paint(g);
+            }
+            Block block = new Block(600,300);
+            block.paint(g);
 
 
-        for(int i=0;i< people.size();i++){
-            for(int j=0;j< allMonsters.size();j++){
-                people.get(i).collision(allMonsters.get(j));
-                allMonsters.get(j).eatPerson(people.get(i));
+            for(int i=0;i< people.size();i++){
+                for(int j=0;j< allMonsters.size();j++){
+                    people.get(i).collision(allMonsters.get(j));
+                    allMonsters.get(j).eatPerson(people.get(i));
+                }
+            }
+            for(int i = 0; i < 15; i++){
+                allDeffenders.get(i).collison(block);
+            }
+            for(int i=0; i<15;i++){
+                allMonsters.get(i).collison(block);
+            }
+            for(int i=0;i<15;i++){
+                for(int j=0;j<15;j++){
+                    allMonsters.get(i).attack(allDeffenders.get(j));
+                }
+            }
+            for(int i=0;i<15;i++){
+                for(int j=0;j<15;j++){
+                    allDeffenders.get(i).attack(allMonsters.get(j));
+                }
             }
         }
-        for(int i = 0; i < 15; i++){
-            allDeffenders.get(i).collison(block);
-        }
-        for(int i=0; i<15;i++){
-            allMonsters.get(i).collison(block);
-        }
-        for(int i=0;i<15;i++){
-            for(int j=0;j<15;j++){
-                allMonsters.get(i).attack(allDeffenders.get(j));
+        if(times == 1501){
+            ArrayList<AllMonsters> liveMonster = new ArrayList<>();
+            ArrayList<AllDefenders> liveDefenders = new ArrayList<>();
+            ArrayList<Person> livePeople = new ArrayList<>();
+            for(int i=0;i<15;i++){
+                if(allMonsters.get(i).isAlive()){
+                    liveMonster.add(allMonsters.get(i));
+                }
+                if(allDeffenders.get(i).isAlive() == true){
+                    liveDefenders.add(allDeffenders.get(i));
+                }
+
             }
-        }
-        for(int i=0;i<15;i++){
-            for(int j=0;j<15;j++){
-                allDeffenders.get(i).attack(allMonsters.get(j));
+            for(int i=0; i<number; i++){
+                if(people.get(i).isAlive()){
+                    livePeople.add(people.get(i));
+                }
             }
+            CreatorFile file = new CreatorFile(liveDefenders.size(),liveMonster.size(),livePeople.size());
+
         }
+
+
 
     }
 
@@ -113,7 +138,7 @@ public class Frame extends JPanel implements ActionListener{
 
 
 
-        Timer t = new Timer(16, this);
+        Timer t = new Timer(50, this);
         t.restart();
 
         frame.add(this);

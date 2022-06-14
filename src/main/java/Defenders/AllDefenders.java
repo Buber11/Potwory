@@ -23,18 +23,21 @@ public abstract class AllDefenders {
     }
     public abstract void paint(Graphics g);
 
+
+
     public void attack(AllMonsters p2) {
 
         Rectangle per1 = new Rectangle(p2.getX(),p2.getY(), 20,20);
         Rectangle per2 = new Rectangle(this.x,this.y, 20,20);
 
-        //collision check
+
         if(per1.intersects(per2) && (p2.getLevel()>=this.level)) {
             this.alive = false;
         }
         if(per1.intersects(per2) && (p2.getLevel()<this.level)){
             level +=1;
         }
+
     }
     public void collison(Block p2){
         Rectangle per1 = new Rectangle(p2.getX(),p2.getY(), 100,100);
@@ -56,5 +59,8 @@ public abstract class AllDefenders {
 
     public int getLevel() {
         return level;
+    }
+    public boolean isAlive() {
+        return alive;
     }
 }
