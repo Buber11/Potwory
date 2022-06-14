@@ -16,10 +16,14 @@ public abstract class AllDefenders {
 
     public AllDefenders() {
         Random rand = new Random();
-        x = rand.nextInt(800);
-        y = rand.nextInt(600);
+        x = rand.nextInt(200);
+        x = x + 500;
+        y = rand.nextInt(200);
+        y = y + 400;
         vx = rand.nextInt(5);
+        vx *= -1;
         vy = rand.nextInt(5);
+        vy *= -1;
     }
     public abstract void paint(Graphics g);
 
@@ -31,7 +35,7 @@ public abstract class AllDefenders {
         Rectangle per2 = new Rectangle(this.x,this.y, 20,20);
 
 
-        if(per1.intersects(per2) && (p2.getLevel()>=this.level)) {
+        if(per1.intersects(per2) && (p2.getLevel()>this.level)) {
             this.alive = false;
         }
         if(per1.intersects(per2) && (p2.getLevel()<this.level)){

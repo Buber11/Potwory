@@ -16,8 +16,10 @@ public class Person {
 
     public Person() {
         Random rand = new Random();
-        x = rand.nextInt(800);
-        y =rand.nextInt(600);
+        x = rand.nextInt(200);
+        x = x + 500;
+        y = rand.nextInt(200);
+        y = y + 400;
         vx = rand.nextInt(5);
         vy = rand.nextInt(5);
     }
